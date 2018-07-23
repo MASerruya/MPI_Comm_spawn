@@ -12,6 +12,8 @@ int main (int argc, char* argv[]) {
  MPI_Comm intercomm;
  MPI_Group group;
 
+ //Some comment.
+
   MPI_Comm_size(MPI_COMM_WORLD, &size2);
   MPI_Comm_get_attr(MPI_COMM_WORLD, MPI_UNIVERSE_SIZE, &universe, &flag);
 
