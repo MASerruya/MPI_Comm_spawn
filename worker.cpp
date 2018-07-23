@@ -17,12 +17,15 @@ int main (int argc, char* argv[]) {
  MPI_Comm_group(MPI_COMM_WORLD, &group);
  MPI_Group_size(group, &size);
 
- int broadcasts = argv[1];
+ int broadcasts = argv[1], processes;
 
- for (int i = 0; i < broadcasts; i++) {
-
+ for (int i = 0; i < broadcasts; i++)
+ {
+  sleep(5);
   MPI_Barrier(parent);
   //BROADCAST
+  MPI_Bcast(&processes, 1, MPI_INT, 0, parent);
+  std::cout << "Broadcast completed in slave " << rank << std::endl;
 
   if (rank == (size-1)) {
 
