@@ -17,20 +17,19 @@ int main (int argc, char* argv[]) {
  MPI_Comm_group(MPI_COMM_WORLD, &group);
  MPI_Group_size(group, &size);
 
- if (rank == 0) {
+ int broadcasts = argv[1];
 
-  int broadcasts;
-  MPI_Recv(&broadcasts, 1, MPI_INT, 0, 0, , MPI_STATUS_IGNORE);
+ for (int i = 0; i < broadcasts; i++) {
 
-  for (int i = 0; i < broadcasts; i++) {
+  MPI_Barrier(parent);
+  //BROADCAST
 
-   //Wait for signal to perform broadcast.
-   //Perform broadcast. BUT NOT HERE!!!
+  if (rank == (size-1)) {
+
+   std::cout << "Process " << rank << " finalizing and returning." << std::endl << "It won't be available for following BROADCASTS!"; 
+   MPI_Finalize();
+   return 0;
   }
- }
- else {
-
-  //Define behavior of remaining processes.
  }
 
  MPI_Finalize();
