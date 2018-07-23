@@ -7,29 +7,36 @@ int main (int argc, char* argv[]) {
 
  MPI_Init(&argc, &argv);
 
- int limit = 1, processes;
+ int limit = 3, processes, universe, flag;
 
- MPI_Comm intercomm[limit];
+ MPI_Comm intercomm;
  MPI_Group group;
+
+  MPI_Comm_size(MPI_COMM_WORLD, &size2);
+  MPI_Comm_get_attr(MPI_COMM_WORLD, MPI_UNIVERSE_SIZE, &universe, &flag);
+
+  if (!flag) {
+
+   std::cout << "No support for UNIVERSE_SIZE." << std::endl << "Number of processes to be thrown?" << endl;
+   std::cin >> processes;
+  }
+  else processes = universe - size2;
+
+  std::cout << "LAUNCHING NEW PROCESSES!" << std::endl;
+  MPI_Comm_spawn(argv[1], MPI_ARGV_NULL, processes, MPI::INFO_NULL, 0, MPI_COMM_WORLD, &intercomm, MPI_ERRCODES_IGNORE);
+
+  MPI_Comm_remote_size(intercomm, &size1);
+  MPI_Comm_group(MPI_COMM_WORLD, &group);
+  std::cout << "PROCESSES CREATED: " << size1 <<". Master processes: " <<  size2 << ". Group: " << group << std::endl;
+
+ //Send number of broadcasts to be done.
 
  for (int i = 0; i < limit; i++) 
  {
 
-  MPI_Comm_size(MPI_COMM_WORLD, &size2);
-  processes = MPI_UNIVERSE_SIZE - size2;
-
-  std::cout << "LAUNCHING NEW PROCESSES!" << std::endl;
-  MPI_Comm_spawn(argv[1], MPI_ARGV_NULL, processes, MPI::INFO_NULL, 0, MPI_COMM_WORLD, &intercomm[i], MPI_ERRCODES_IGNORE);
-
-  MPI_Comm_remote_size(intercomm[i], &size1);
-  MPI_Comm_group(MPI_COMM_WORLD, &group);
-  std::cout << "PROCESSES CREATED: " << size1 <<". Master processes: " <<  size2 << ". Group: " << group << std::endl;
+  std::cout << "Prepare for broadcast!" << std::endl;
+  //Send signal to perform broadcast.
  }
-
- /*sleep(50);
- MPI_Comm_remote_size(intercomm[0], &size1);
- std::cout << size1 << std::endl;
- //}*/
 
  MPI_Finalize();
 

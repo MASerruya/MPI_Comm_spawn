@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main () {
+int main (int argc, char* argv[]) {
 
  int rank, size;
 
@@ -14,17 +14,20 @@ int main () {
  MPI_Comm_group(MPI_COMM_WORLD, &group);
  MPI_Group_size(group, &size);
 
+ if (rank == 0) {
 
- for (int i = 0; i < 3; i++)
- {
-  std::cout << " Process " << rank << " of " << size << " breathing. Group: " << group << std::endl;
-  sleep(3);
-  /*if (rank == 0) sleep(10);
-  else {
-   MPI_Group_free(&group);
-   MPI_Finalize(); 
-   return 0;
-  }*/
+  int broadcasts;
+  MPI_Recv(&broadcasts, 1, MPI_INT, 0, 0, , MPI_STATUS_IGNORE);
+
+  for (int i = 0; i < broadcasts; i++) {
+
+   //Wait for signal to perform broadcast.
+   //Perform broadcast. BUT NOT HERE!!!
+  }
+ }
+ else {
+
+  //Define behavior of remaining processes.
  }
 
  MPI_Finalize();
