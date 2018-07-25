@@ -27,7 +27,7 @@ int main (int argc, char* argv[]) {
   MPI_Bcast(&processes, 1, MPI_INT, 0, parent);
   std::cout << "Broadcast completed in slave " << rank << std::endl;
 
-  if (rank == (size-1)) {
+  if ((rank == (size-1)) && (i == 2)) {
 
    std::cout << "Process " << rank << " finalizing and returning." << std::endl << "It won't be available for following BROADCASTS!"; 
    MPI_Finalize();
