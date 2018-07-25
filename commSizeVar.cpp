@@ -5,7 +5,7 @@ int main (int argc, char* argv[]) {
 
  MPI_Init(&argc, &argv);
 
- int limit = argv[2], processes, universe, flag, size1, size2;
+ int limit = (int) *argv[2], processes, universe, flag, size1, size2;
 
  MPI_Comm intercomm;
  MPI_Group group;
@@ -15,7 +15,7 @@ int main (int argc, char* argv[]) {
 
  if (!flag) {
 
-  std::cout << "No support for UNIVERSE_SIZE." << std::endl << "Number of processes to be thrown?" << endl; 
+  std::cout << "No support for UNIVERSE_SIZE." << std::endl << "Number of processes to be thrown?" << std::endl; 
   std::cin >> processes;
  }
  else processes = universe - size1;

@@ -11,13 +11,13 @@ int main (int argc, char* argv[]) {
  int rank, size;
 
  //Obtaining parent communicator.
- MPI_Comm_get_parent(&parent;);
+ MPI_Comm_get_parent(&parent);
 
  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
  MPI_Comm_group(MPI_COMM_WORLD, &group);
  MPI_Group_size(group, &size);
 
- int broadcasts = argv[1], processes;
+ int broadcasts = (int) *argv[1], processes;
 
  for (int i = 0; i < broadcasts; i++)
  {
