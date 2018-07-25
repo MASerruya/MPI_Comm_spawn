@@ -30,8 +30,9 @@ int main (int argc, char* argv[]) {
 
  for (int i = 0; i < limit; i++) 
  {
+  sleep(3);
   std::cout << "Prepare for broadcast!" << std::endl;
-  sleep(5);
+  sleep(3);
   MPI_Barrier(intercomm);
   //BROADCAST
   MPI_Bcast(&processes, 1, MPI_INT, MPI_ROOT, intercomm);
