@@ -22,7 +22,7 @@ int main (int argc, char* argv[]) {
 
  std::cout << "LAUNCHING NEW PROCESSES!" << std::endl;
  //Execute 'worker' and pass as argument the number of broadcasts to be done.
- MPI_Comm_spawn(argv[1], argv[2], processes, MPI_INFO_NULL, 0, MPI_COMM_WORLD, &intercomm, MPI_ERRCODES_IGNORE);
+ MPI_Comm_spawn(argv[1], argv, processes, MPI_INFO_NULL, 0, MPI_COMM_WORLD, &intercomm, MPI_ERRCODES_IGNORE);
 
  MPI_Comm_remote_size(intercomm, &size2);
  MPI_Comm_group(MPI_COMM_WORLD, &group);

@@ -17,7 +17,7 @@ int main (int argc, char* argv[]) {
  MPI_Comm_group(MPI_COMM_WORLD, &group);
  MPI_Group_size(group, &size);
 
- int broadcasts = (int) *argv[1], processes;
+ int broadcasts = (int) *argv[2], processes;
 
  for (int i = 0; i < broadcasts; i++)
  {
