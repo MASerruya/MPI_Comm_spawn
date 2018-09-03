@@ -32,6 +32,8 @@ int main (int argc, char* argv[]) {
    std::cout << "Process " << rank << " finalizing and returning." << std::endl << "It won't be available for following BROADCASTS!"; 
    MPI_Finalize();
    return 0;
+
+   //int var = 10/0; 
   }
  }
 
